@@ -1,0 +1,29 @@
+{
+  "enabledPlugins": {
+    "security-guidance@claude-plugins-official": true
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/carlray/VS_Code/Claude-Code-Masterclass-starter-project && npx eslint --fix \"${file}\" 2>&1 | head -20"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"${file}\" | grep -q '\\.env'; then echo 'Blocked: use .env.local for local secrets'; exit 1; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
